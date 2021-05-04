@@ -1,5 +1,7 @@
 let valid1 =false;
 let valid2 = false;
+let valid3 =false;
+let valid4 = false;
 let grade = {};
 $(document).ready(function () {
     $("#submitButton").click(storeGrade);
@@ -7,40 +9,61 @@ $(document).ready(function () {
 function storeGrade(event) {
     event.preventDefault();
 
+    //Validate First Name
+    if ($("#studentFirstName").val() == ""){
+        $("#studentFirstNameCorrection").text("The first name cannot be left blank.");
+        valid1 = false;
+    }
+    else {
+        $("#studentFirstNameCorrection").text("");
+        valid1 =true;
+    }
+
+    //Validate Last Name
+    if ($("#studentLastName").val() == ""){
+        $("#studentLastNameCorrection").text("The last name cannot be left blank.");
+        valid2 = false;
+    }
+    else {
+        $("#studentLastNameCorrection").text("");
+        valid2 =true;
+    }
+
+
     //Validate earned points
     if ($("#pointsEarned").val() > 500) {
         $("#pointsEarned").val("");
         $("#pointsEarnedCorrection").text("The maximum number of points is 500.");
-        valid1 = false;
+        valid3 = false;
         }
     else if ($("#pointsEarned").val() < 0) {
         $("#pointsEarned").val("");
         $("#pointsEarnedCorrection").text("The minimum number of points is 0.");
-        valid1 = false;
+        valid3 = false;
         }
-    else if ($("#pointsEarned").val() >  $("#pointsPossible").val()){
+    else if (parseInt($("#pointsEarned").val()) >  parseInt($("#pointsPossible").val())){
         $("#pointsEarnedCorrection").text("The earned points cannot be greater than the possible points.");
-        valid1 = false;
+        valid3 = false;
         }
     else {
         $("#pointsEarnedCorrection").text("");
-        valid1 =true;
+        valid3 =true;
     }
 
     //Validate Possible points
     if ($("#pointsPossible").val() > 500) {
         $("#pointsPossible").val("");
         $("#pointsPossibleCorrection").text("The maximum number of points is 500.");
-        valid2=false;
+        valid4=false;
     } else if ($("#pointsPossible").val() < 0) {
         $("#pointsPossible").val("");
         $("#pointsPossibleCorrection").text("The minimum number of points is 0.");
-        valid2=false;
+        valid4=false;
     } else {
         $("#pointsPossibleCorrection").text("");
-        valid2=true;
+        valid4=true;
     }
-    if(valid1 && valid2){
+    if(valid1 && valid2 && valid3 && valid4){
         grade = {
             firstName: $("#studentFirstName").val(),
             lastName: $("#studentLastName").val(),
