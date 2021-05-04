@@ -1,5 +1,6 @@
 let valid1 =false;
 let valid2 = false;
+let grade = {};
 $(document).ready(function () {
     $("#submitButton").click(storeGrade);
 })
@@ -40,17 +41,41 @@ function storeGrade(event) {
         valid2=true;
     }
     if(valid1 && valid2){
-        let grade = {
+        grade = {
             firstName: $("#studentFirstName").val(),
             lastName: $("#studentLastName").val(),
             earnedPoints: $("#pointsEarned").val(),
             possiblePoints: $("#pointsPossible").val()
         };
+        $("#studentFirstName").val("");
+        $("#studentLastName").val("");
+        $("#pointsEarned").val("");
+        $("#pointsPossible").val("");
         displayGrade();
     }
 
 }
 
 function displayGrade() {
-
+    let fName = grade.firstName;
+    let lName = grade.lastName;
+    let score = (grade.earnedPoints / grade.possiblePoints) *100;
+    let letterGrade;
+    if (score>=90){
+        letterGrade = "A";
+    }
+    else if (score>=80){
+        letterGrade = "B";
+    }
+    else if (score>=70){
+        letterGrade ="C";
+    }
+    else if (score >= 60){
+        letterGrade = "D";
+    }
+    else{
+        letterGrade ="F";
+    }
+    let message = `${lName}, ${fName}: ${score}% ${letterGrade}`;
+    $("#dataDisplay").text(message);
 }
